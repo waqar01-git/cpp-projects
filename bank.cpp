@@ -1,74 +1,120 @@
-#include<iostream>
-#include<cstring>
+#include <iostream>
+#include <string>
 using namespace std;
 
-//class
-class BankAccount{
-
-private:   
- int accNo;
-string owner;
-float balance;
+class BankAccount
+{
+    int accNo;
+    string name;
+    int balance;
 
 public:
-BankAccount(string s,int a,float b){
+    BankAccount(int account, string name, int balance)
+    {
+        accNo = account;
+        this->name = name;
+        this->balance = balance;
+    }
+    void deposit(int deposit)
+    {
+        if (deposit <= 0)
+        {
+            cout << "Sorry! This amount is not deposited" << endl;
+        }
+        else
+        {
+            balance += deposit;
+            cout << "You deposit " << deposit << " rs sucessfully" << endl;
+        }
+    }
+    void withdraw(int withdraw)
+    {
+        if (withdraw > balance)
+        {
+            cout << "Sorry! " << withdraw << " amount is not in your account" << endl;
+        }
+        else
+        {
+            cout << withdraw << " rs is withdraw sucessfully" << endl;
+            balance -= withdraw;
+        }
+    }
+    void check()
+    {
 
-       accNo=a;
-       balance=b;
-       owner=s;
-}
+        char ch;
+        cout << "Want to check account balance?((y or n): )" << endl;
+        cin >> ch;
+        if (ch == 'Y' || ch == 'y')
+        {
+            cout << "Your balance is :" << balance << endl;
+        }
+        else if (ch == 'N' || ch == 'n')
+        {
+            cout << "Thanks for using ATM" << endl;
+        }
+        else
+            cout << "Enter valid choice:" << endl;
+    }
+    void display()
+    {
+        cout << "Account Owner: " << name << endl;
+        cout << "Account id " << accNo << endl;
+        cout << "Balance: " << balance << endl;
+    }
+    void choice(int n)
+    {
+        int depositAmount;
+        int withdrawAmount;
+        switch (n)
+        {
 
-// BankAccount(){
-//     accNo=0;
-//   owner="unknown";
-//     balance=0;
- 
-// }
+        case 1:
+            cout << "Enter amount to deposit: ";
+            cin >> depositAmount;
+            deposit(depositAmount);
+            break;
+        case 2:
+            cout << "Enter amount to Withdraw: ";
+            cin >> withdrawAmount;
+            withdraw(withdrawAmount);
+            break;
+        case 3:
+            check();
+            break;
+        case 4:
+            display();
+            break;
+        case 5:
+            break;
 
- void deposit(int a){
-     
-   
-   int  newAmount=a+balance;
-    cout<<"NEW AMOUNT:"<<newAmount<<endl;
-   
- }
-
-  void withdraw(int w){
-
-       if (balance>=w){
-          balance-=w;
-       } else 
-         cout<<"insufficient balance"<<endl;
-     
-         cout<<"REMAINING BALANCE:"<<balance<<endl;
-  }  
-  void display() {
-
-      cout<<"     ACCOUNT INFORMATION"<<endl;
-   cout<<"Account Number:"<<accNo<<endl;
-   cout<<"Owner Name:"<<owner<<endl;
-   cout<<"Balance:"<<balance<<endl;
-
-  }
+        default:
+            cout << "Enter valid choice" << endl;
+        }
+    }
 };
+int main()
+{
+    int choice;
+    BankAccount account1(1198, "Hanan Qaisar", 10000.89);
+    cout << "Choose one option:" << endl
+         << "1. Deposit" << endl
+         << "2. Withdraw" << endl
+         << "3. Check Balabnce" << endl
+         << "4. Display detail" << endl
+         << "5. End" << endl;
+    cin >> choice;
+    while (choice != 5)
+    {
+        account1.choice(choice);
+        cout << "Choose one option:" << endl
+             << "1. Deposit" << endl
+             << "2. Withdraw" << endl
+             << "3. Check Balabnce" << endl
+             << "4. Display detail" << endl
+             << "5. End" << endl;
+        cin >> choice;
+    };
 
-
-
-int main(){ 
-   
-  BankAccount s1("Waqar",4823122,100000.000);
-
-  BankAccount s2("hanan",3428342,5000.00);
-
-   int amount;
-    cout<<"enter amount:"<<endl;
-     cin>>amount;
-
- s1.deposit(amount);
- s2.deposit(amount);
-  s1.withdraw(2000);
- s2.withdraw(500);
-  s1.display();
-   s2.display();
- return 0;   
+    return 0;
 }
